@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clue Access</title>
+    <style>
+        @font-face {
+    font-family: 'PiratesFont';
+    src: url('BattlesbridgeDemo-AL126.ttf') format('truetype');
+    font-weight: bold; /* Make the font bold */
+}
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/80/16/1000_F_121801600_CMAfgueYYBiq0w88E1r5Lkklp7Hl1AO4.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'PiratesFont', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #password {
+            width: 95%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #E9CDA5; /* Input background color */
+            color: #271D1C; /* Input text color */
+            border-radius: 100px; /* Rounded corners for the input */
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+        }
+
+        #password::placeholder {
+            color: #271D1C; /* Input placeholder color */
+        }
+
+        button {
+            top : 20px;
+            padding-right: 50px;
+            padding-left:50px;
+            padding-top: 30px;
+            background: #271D1C; /* Gradient background */            
+            color: #ffffff; /* Button text color */
+            border: 0px;
+            border-radius: 100px; /* Rounded corners for the button */
+            font-family: 'PiratesFont', Arial, sans-serif; /* Use the PiratesFont for the body text */
+            font-size: 20px;
+            text-align: bottom;
+            cursor: pointer;
+            
+        }
+
+        
+        #passwordForm {
+            text-align: center; /* Center-align content within the form */
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 8px;
+            padding-top : 40px;
+            padding: 20px;
+        }
+
+        #clue {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+            font-family: 'PiratesFont', Arial, sans-serif; /* Use the PiratesFont for the body text */
+            font-size: 20px;
+            text-align: center;
+            color: white;
+            padding-top: 50px;
+            display: none;
+        }
+        
+        #gameInfo {
+            color:#271D1A;
+            text-align: center;
+            margin-top: 20px;
+            font-family: 'PiratesFont', Arial, sans-serif;
+        }
+
+        #gameLogo {
+            width: 100px; /* Adjust the width as needed */
+            
+        }
+
+        #gameName {
+            font-size: 24px;
+            color: black;
+            margin-top: 10px;
+
+        .reveal {
+            
+            animation: revealText 5s forwards;
+        }
+
+        @keyframes revealText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="clue" class="reveal">
+        <!-- The clue text will appear here character by character -->
+    </div>
+    
+    <div id="passwordForm">
+        <form>
+            <input type="password" id="password" placeholder="Type the magic word.." required>
+            <button type="button" onclick="checkPassword()">Submit</button>
+            <div id="gameInfo">
+        <img src="https://seeklogo.com/images/M/mugiwara-logo-303FD55C54-seeklogo.com.png" alt="Game Logo" id="gameLogo">
+        <h3 id="gameName">The Lost Loot</h3>
+    </div>
+        </form>
+    </div>
+    
+
+    <script>
+    function checkPassword() {
+        var enteredPassword = document.getElementById("password").value.trim().toLowerCase();
+
+        // Create an object to map input values to clues
+        var clueMap = {
+            "welcome":"You will find me laying on the floor and welcoming you at the door",
+            "door": "The next clue is on the door",
+            "chair": "The next clue is on the chair"
+            // Add more mappings as needed
+        };
+
+        var clueText = clueMap[enteredPassword];
+
+        if (clueText) {
+            displayClue(clueText);
+        } else {
+            alert("Incorrect input. Please try again.");
+        }
+    }
+
+    function displayClue(clueText) {
+        var clueElement = document.getElementById("clue");
+        clueElement.innerHTML = ""; // Clear any previous text
+        clueElement.style.display = "block";
+        clueElement.classList.add("reveal");
+
+        var index = 0;
+        var interval = setInterval(function() {
+            if (index < clueText.length) {
+                clueElement.innerHTML += clueText.charAt(index);
+                index++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 100); // Adjust the interval duration as needed (milliseconds)
+    }
+</script>
+
+</body>
+</html>
